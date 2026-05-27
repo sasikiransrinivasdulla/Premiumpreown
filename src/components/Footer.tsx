@@ -36,11 +36,11 @@ export function Footer() {
         }}
       />
 
-      <div className="container-luxury py-16 lg:py-24">
+      <div className="container-luxury section-padding">
         <FadeIn>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
             {/* Brand Column */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 flex flex-col items-center text-center">
               <div className="flex items-center gap-3 mb-6">
                 <div
                   className="w-9 h-9 rounded-sm flex items-center justify-center"
@@ -120,7 +120,7 @@ export function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div>
+            <div className="flex flex-col items-center text-center">
               <h4
                 className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-6"
                 style={{ color: "var(--color-accent-gold)" }}
@@ -136,7 +136,7 @@ export function Footer() {
                         e.preventDefault();
                         handleClick(link.href);
                       }}
-                      className="text-sm transition-colors duration-500 flex items-center gap-1 group"
+                      className="text-sm transition-colors duration-500 flex items-center justify-center gap-1 group"
                       style={{ color: "var(--color-text-secondary)" }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.color = "var(--color-text-primary)")
@@ -157,7 +157,7 @@ export function Footer() {
             </div>
 
             {/* Contact Info */}
-            <div>
+            <div className="flex flex-col items-center text-center">
               <h4
                 className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-6"
                 style={{ color: "var(--color-accent-gold)" }}
@@ -203,7 +203,7 @@ export function Footer() {
             </div>
 
             {/* Business Hours */}
-            <div>
+            <div className="flex flex-col items-center text-center">
               <h4
                 className="text-[11px] font-semibold tracking-[0.2em] uppercase mb-6"
                 style={{ color: "var(--color-accent-gold)" }}
@@ -216,11 +216,11 @@ export function Footer() {
                   { day: "Saturday", time: "10:00 AM – 6:00 PM" },
                   { day: "Sunday", time: "By Appointment" },
                 ].map((schedule) => (
-                  <li key={schedule.day} className="flex justify-between items-start">
+                  <li key={schedule.day} className="flex flex-col items-center">
                     <span className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
                       {schedule.day}
                     </span>
-                    <span className="text-sm text-right" style={{ color: "var(--color-text-muted)" }}>
+                    <span className="text-sm" style={{ color: "var(--color-text-muted)" }}>
                       {schedule.time}
                     </span>
                   </li>
@@ -232,7 +232,7 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div
-          className="mt-16 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+          className="mt-16 pt-8 flex flex-col items-center justify-center gap-6 text-center"
           style={{ borderTop: "1px solid var(--color-border-subtle)" }}
         >
           <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>

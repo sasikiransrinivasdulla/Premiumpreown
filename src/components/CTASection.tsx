@@ -16,8 +16,7 @@ export function CTASection() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden flex items-center justify-center"
-      style={{ minHeight: "90vh" }}
+      className="relative overflow-hidden flex items-center justify-center section-padding"
     >
       {/* Background image */}
       <div className="absolute inset-0">
@@ -47,7 +46,7 @@ export function CTASection() {
         }}
       />
 
-      <div className="relative z-10 w-full py-16 lg:py-24">
+      <div className="relative z-10 w-full">
         <div className="container-luxury">
           {/* Main CTA Content */}
           <div className="text-center max-w-3xl mx-auto mb-20">

@@ -1,68 +1,42 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { MagneticButton } from "@/components/motion/MagneticButton";
-import { ArrowRight, Fuel, Gauge, Calendar } from "lucide-react";
-
-const curatedCars = [
-  {
-    name: "Toyota Corolla",
-    image: "/images/toyota_corolla.webp",
-    year: "2021",
-    fuel: "Petrol",
-    km: "28,000",
-    price: "₹9.5 Lakh",
-    badge: "Bestseller",
-  },
-  {
-    name: "Honda Civic",
-    image: "/images/honda_civic.webp",
-    year: "2020",
-    fuel: "Petrol",
-    km: "35,000",
-    price: "₹12.8 Lakh",
-    badge: "Premium Pick",
-  },
-  {
-    name: "Ford Focus",
-    image: "/images/ford_focus.webp",
-    year: "2019",
-    fuel: "Diesel",
-    km: "42,000",
-    price: "₹7.2 Lakh",
-    badge: "Great Value",
-  },
-  {
-    name: "Volkswagen Jetta",
-    image: "/images/volkswagen_jetta.webp",
-    year: "2021",
-    fuel: "Petrol",
-    km: "22,000",
-    price: "₹11.5 Lakh",
-    badge: "Low Mileage",
-  },
-  {
-    name: "Mazda 3",
-    image: "/images/mazda_3.webp",
-    year: "2020",
-    fuel: "Petrol",
-    km: "30,000",
-    price: "₹10.2 Lakh",
-    badge: "Certified",
-  },
-  {
-    name: "Nissan Altima",
-    image: "/images/nissan_altima.webp",
-    year: "2019",
-    fuel: "Petrol",
-    km: "45,000",
-    price: "₹8.8 Lakh",
-    badge: "Family Choice",
-  },
-];
+import { ArrowRight, Fuel, Gauge, Settings } from "lucide-react";
 
 export function CuratedSection() {
+  const [cars, setCars] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const res = await fetch("/api/cars");
+        if (!res.ok) throw new Error("Failed to fetch cars");
+        const data = await res.json();
+        setCars(data);
+      } catch (err) {
+        console.error(err);
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
+
+  const formatPrice = (price: number) => {
+    if (price >= 100000) {
+      return `₹${(price / 100000).toFixed(2).replace(/\.00$/, "")} Lakh`;
+    }
+    return `₹${price.toLocaleString("en-IN")}`;
+  };
+
   return (
     <section
       id="curated"
@@ -151,117 +125,190 @@ export function CuratedSection() {
             </div>
           </FadeIn>
 
-          {/* Car Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {curatedCars.map((car, i) => (
-              <FadeIn key={car.name} delay={i * 0.1}>
+          {/* Loading State */}
+          {loading && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {[...Array(3)].map((_, i) => (
                 <div
-                  className="group rounded-xl overflow-hidden transition-all duration-700 hover:transform hover:-translate-y-2"
+                  key={i}
+                  className="rounded-xl overflow-hidden animate-pulse"
                   style={{
                     background: "var(--color-bg-card)",
                     border: "1px solid var(--color-border-subtle)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(200,169,107,0.2)";
-                    e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
-                    e.currentTarget.style.boxShadow = "none";
+                    height: "400px"
                   }}
                 >
-                  {/* Image */}
-                  <div className="relative overflow-hidden" style={{ height: "220px" }}>
-                    <Image
-                      src={car.image}
-                      alt={`${car.name} - Premium Pre-Owned`}
-                      fill
-                      className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: "linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.5) 100%)",
-                      }}
-                    />
-                    {/* Badge */}
-                    <div
-                      className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase"
-                      style={{
-                        background: "rgba(200,169,107,0.9)",
-                        color: "var(--color-bg-primary)",
-                      }}
-                    >
-                      {car.badge}
-                    </div>
-                  </div>
-
-                  {/* Content */}
+                  <div className="h-[220px]" style={{ background: "rgba(255,255,255,0.02)" }} />
                   <div className="p-6">
-                    <h4
-                      className="text-lg font-semibold mb-3"
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        color: "var(--color-text-primary)",
-                      }}
-                    >
-                      {car.name}
-                    </h4>
-
-                    {/* Specs */}
-                    <div className="flex gap-4 mb-4">
-                      <div className="flex items-center gap-1.5">
-                        <Calendar size={13} style={{ color: "var(--color-text-muted)" }} />
-                        <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                          {car.year}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Fuel size={13} style={{ color: "var(--color-text-muted)" }} />
-                        <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                          {car.fuel}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Gauge size={13} style={{ color: "var(--color-text-muted)" }} />
-                        <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                          {car.km} km
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Price + CTA */}
-                    <div className="flex items-center justify-between pt-4" style={{ borderTop: "1px solid var(--color-border-subtle)" }}>
-                      <div>
-                        <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-                          Starting at
-                        </span>
-                        <p
-                          className="text-xl font-bold"
-                          style={{
-                            fontFamily: "var(--font-display)",
-                            color: "var(--color-accent-gold)",
-                          }}
-                        >
-                          {car.price}
-                        </p>
-                      </div>
-                      <button
-                        className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                        style={{
-                          background: "var(--color-accent-gold-dim)",
-                          border: "1px solid var(--color-border-gold)",
-                        }}
-                      >
-                        <ArrowRight size={16} style={{ color: "var(--color-accent-gold)" }} />
-                      </button>
+                    <div className="h-6 rounded mb-4 w-3/4" style={{ background: "rgba(255,255,255,0.05)" }} />
+                    <div className="h-4 rounded mb-6 w-full" style={{ background: "rgba(255,255,255,0.03)" }} />
+                    <div className="flex justify-between items-center pt-4" style={{ borderTop: "1px solid var(--color-border-subtle)" }}>
+                      <div className="h-6 rounded w-1/3" style={{ background: "rgba(255,255,255,0.05)" }} />
+                      <div className="h-10 w-10 rounded-full" style={{ background: "var(--color-accent-gold-dim)" }} />
                     </div>
                   </div>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && !error && cars.length === 0 && (
+            <FadeIn>
+              <div 
+                className="text-center py-20 rounded-xl"
+                style={{
+                  background: "var(--color-bg-card)",
+                  border: "1px solid var(--color-border-subtle)",
+                }}
+              >
+                <p className="text-xl" style={{ fontFamily: "var(--font-display)", color: "var(--color-text-primary)" }}>
+                  No curated vehicles available yet
+                </p>
+                <p className="text-sm mt-2" style={{ color: "var(--color-text-secondary)" }}>
+                  Please check back soon for our latest arrivals.
+                </p>
+              </div>
+            </FadeIn>
+          )}
+
+          {/* Error State */}
+          {!loading && error && (
+            <FadeIn>
+              <div 
+                className="text-center py-20 rounded-xl"
+                style={{
+                  background: "var(--color-bg-card)",
+                  border: "1px solid rgba(255,0,0,0.1)",
+                }}
+              >
+                <p className="text-xl" style={{ color: "var(--color-text-primary)" }}>
+                  Unable to load vehicles
+                </p>
+              </div>
+            </FadeIn>
+          )}
+
+          {/* Car Grid */}
+          {!loading && !error && cars.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {cars.map((car, i) => (
+                <FadeIn key={car._id} delay={i * 0.1}>
+                  <div
+                    className="group rounded-xl overflow-hidden transition-all duration-700 hover:transform hover:-translate-y-2 relative"
+                    style={{
+                      background: "var(--color-bg-card)",
+                      border: "1px solid var(--color-border-subtle)",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(200,169,107,0.2)";
+                      e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.4)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    <Link href={`/cars/${car._id}`} className="absolute inset-0 z-10">
+                      <span className="sr-only">View {car.carName} details</span>
+                    </Link>
+
+                    {/* Image */}
+                    <div className="relative overflow-hidden" style={{ height: "220px" }}>
+                      <Image
+                        src={car.thumbnailImage || "/images/placeholder-car.webp"}
+                        alt={`${car.carName} - Premium Pre-Owned`}
+                        fill
+                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                      <div
+                        className="absolute inset-0"
+                        style={{
+                          background: "linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.5) 100%)",
+                        }}
+                      />
+                      {/* Badge */}
+                      {car.featured && (
+                        <div
+                          className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase"
+                          style={{
+                            background: "rgba(200,169,107,0.9)",
+                            color: "var(--color-bg-primary)",
+                          }}
+                        >
+                          Featured
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 relative z-20 pointer-events-none">
+                      <h4
+                        className="text-lg font-semibold mb-3 truncate"
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          color: "var(--color-text-primary)",
+                        }}
+                        title={car.carName}
+                      >
+                        {car.carName}
+                      </h4>
+
+                      {/* Specs */}
+                      <div className="flex gap-4 mb-4">
+                        <div className="flex items-center gap-1.5">
+                          <Fuel size={13} style={{ color: "var(--color-text-muted)" }} />
+                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                            {car.fuelType}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Settings size={13} style={{ color: "var(--color-text-muted)" }} />
+                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                            {car.transmission}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Gauge size={13} style={{ color: "var(--color-text-muted)" }} />
+                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
+                            {car.kilometersDriven?.toLocaleString("en-IN") || 0} km
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Price + CTA */}
+                      <div className="flex items-center justify-between pt-4" style={{ borderTop: "1px solid var(--color-border-subtle)" }}>
+                        <div>
+                          <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                            Starting at
+                          </span>
+                          <p
+                            className="text-xl font-bold"
+                            style={{
+                              fontFamily: "var(--font-display)",
+                              color: "var(--color-accent-gold)",
+                            }}
+                          >
+                            {formatPrice(car.price)}
+                          </p>
+                        </div>
+                        <div
+                          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
+                          style={{
+                            background: "var(--color-accent-gold-dim)",
+                            border: "1px solid var(--color-border-gold)",
+                          }}
+                        >
+                          <ArrowRight size={16} style={{ color: "var(--color-accent-gold)" }} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>
