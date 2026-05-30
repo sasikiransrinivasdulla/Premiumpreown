@@ -8,9 +8,9 @@ import { CountUp } from "@/components/motion/CountUp";
 import { Shield, Award, ThumbsUp, Users } from "lucide-react";
 
 const stats = [
-  { icon: Shield, value: 500, suffix: "+", label: "Cars Delivered", description: "Trusted by families across India" },
-  { icon: Award, value: 10, suffix: "+", label: "Years of Trust", description: "A decade of excellence" },
-  { icon: ThumbsUp, value: 98, suffix: "%", label: "Satisfaction Rate", description: "Verified customer happiness" },
+  { icon: Shield, value: 500, suffix: "+", label: "Delivered", description: "Trusted across India" },
+  { icon: Award, value: 10, suffix: "+", label: "Years Active", description: "A decade of trust" },
+  { icon: ThumbsUp, value: 98, suffix: "%", label: "Satisfaction", description: "Verified happiness" },
   { icon: Users, value: 200, suffix: "+", label: "Happy Families", description: "Growing every day" },
 ];
 
@@ -48,7 +48,7 @@ export function TrustSection() {
         <div className="container-luxury">
           {/* Section Header */}
           <FadeIn>
-            <div className="text-center mb-20">
+            <div className="text-center mb-24">
               <span className="label-luxury mb-4 block">Why Choose Us</span>
               <h2
                 className="heading-display mb-6"
@@ -64,15 +64,14 @@ export function TrustSection() {
                 className="text-premium max-w-2xl mx-auto"
                 style={{ fontSize: "clamp(0.95rem, 1.3vw, 1.1rem)" }}
               >
-                Every vehicle in our collection has been personally inspected,
-                verified, and certified. We believe in complete transparency,
-                honest pricing, and building relationships that last.
+                Every vehicle is personally inspected, verified, and certified.
+                Absolute transparency, honest pricing, and a relationship built to last.
               </p>
             </div>
           </FadeIn>
 
           {/* Stats Grid */}
-          <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-20">
+          <StaggerChildren className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-24">
             {stats.map((stat) => (
               <motion.div
                 key={stat.label}

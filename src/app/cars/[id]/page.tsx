@@ -53,6 +53,28 @@ export default async function CarDetailsPage({
     return `₹${price.toLocaleString("en-IN")}`;
   };
 
+  const renderPrice = (price: number) => {
+    let formattedNum = price.toLocaleString("en-IN");
+    let suffix = "";
+    
+    if (price >= 100000) {
+      formattedNum = (price / 100000).toFixed(2).replace(/\.00$/, "");
+      suffix = "Lakh";
+    }
+
+    return (
+      <div className="flex items-baseline justify-start lg:justify-end gap-1.5">
+        <span className="text-[0.6em] font-medium opacity-40 relative -top-[0.1em] tracking-normal font-sans">₹</span>
+        <span className="tracking-tight">{formattedNum}</span>
+        {suffix && (
+          <span className="text-[0.55em] uppercase tracking-[0.25em] font-medium opacity-50 ml-1.5 font-sans">
+            {suffix}
+          </span>
+        )}
+      </div>
+    );
+  };
+
   const whatsappMessage = encodeURIComponent(
     `Hello, I am interested in the ${car.carName} listed on your website. Price: ${formatPrice(car.price)}. Please share more details.`
   );
@@ -105,10 +127,10 @@ export default async function CarDetailsPage({
                 <p className="text-xl lg:text-2xl" style={{ color: "var(--color-text-secondary)" }}>{car.variant}</p>
               </div>
               <div className="lg:text-right">
-                <span className="text-xs uppercase tracking-[0.15em] block mb-2" style={{ color: "var(--color-text-muted)" }}>Asking Price</span>
-                <p className="text-4xl lg:text-5xl font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--color-accent-gold)" }}>
-                  {formatPrice(car.price)}
-                </p>
+                <span className="text-xs uppercase tracking-[0.2em] block mb-2 opacity-50 font-medium font-sans">Asking Price</span>
+                <div className="text-4xl lg:text-5xl font-light" style={{ fontFamily: "var(--font-display)", color: "var(--color-text-primary)" }}>
+                  {renderPrice(car.price)}
+                </div>
               </div>
             </div>
           </FadeIn>

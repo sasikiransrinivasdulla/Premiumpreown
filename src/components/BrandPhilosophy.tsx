@@ -20,7 +20,7 @@ export function BrandPhilosophy() {
       />
 
       <div className="container-luxury relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
           {/* Content Side */}
           <div>
             <FadeIn>
@@ -52,10 +52,9 @@ export function BrandPhilosophy() {
                   lineHeight: 1.85,
                 }}
               >
-                We started with a simple belief — buying a pre-owned car
-                shouldn&apos;t feel like a compromise. It should feel like a
-                confident, premium experience that respects your time, your money,
-                and your family&apos;s safety.
+                We believe buying a pre-owned car should never feel like a compromise.
+                It should be a confident, premium experience built on safety, quality,
+                and mutual respect.
               </p>
             </FadeIn>
 
@@ -67,10 +66,8 @@ export function BrandPhilosophy() {
                   lineHeight: 1.85,
                 }}
               >
-                Every car in our collection is personally inspected, every detail
-                is documented, and every customer is treated with the care they
-                deserve. We don&apos;t just sell cars — we earn trust, one family at
-                a time.
+                Every vehicle is personally vetted, certified, and fully documented.
+                We don&apos;t just sell cars — we earn trust, one journey at a time.
               </p>
             </FadeIn>
 

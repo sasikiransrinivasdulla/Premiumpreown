@@ -11,25 +11,25 @@ const processSteps = [
     icon: Search,
     title: "Rigorous Inspection",
     description:
-      "Every vehicle undergoes a comprehensive multi-point inspection by certified technicians before joining our collection.",
+      "Multi-point inspection by certified technicians.",
   },
   {
     icon: FileCheck,
     title: "Complete Documentation",
     description:
-      "Full transparency with verified service history, ownership records, and insurance transfer assistance.",
+      "Verified service history and seamless ownership transfer.",
   },
   {
     icon: Wallet,
     title: "Easy Financing",
     description:
-      "Flexible financing options with competitive rates. We work with leading banks to find the best plan for you.",
+      "Competitive rates and quick approvals through leading bank partners.",
   },
   {
     icon: Headphones,
     title: "After-Sales Care",
     description:
-      "Our relationship doesn't end at the handover. Enjoy dedicated support, service reminders, and priority assistance.",
+      "Dedicated support and priority assistance long after handover.",
   },
 ];
 
@@ -52,7 +52,7 @@ export function ExperienceSection() {
       <div className="container-luxury relative z-10">
         {/* Header */}
         <FadeIn>
-          <div className="text-center mb-20">
+          <div className="text-center mb-24">
             <span className="label-luxury mb-4 block">The Process</span>
             <h2
               className="heading-display mb-6"
@@ -68,14 +68,13 @@ export function ExperienceSection() {
               className="text-premium max-w-2xl mx-auto"
               style={{ fontSize: "clamp(0.95rem, 1.3vw, 1.1rem)" }}
             >
-              From first inquiry to keys in hand — every step is designed to be
-              smooth, transparent, and stress-free.
+              A seamless, transparent journey from first inquiry to keys in hand.
             </p>
           </div>
         </FadeIn>
 
         {/* Split Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-32 items-center">
           {/* Image Side */}
           <FadeIn direction="left" className="order-2 lg:order-1">
             <div className="relative rounded-2xl overflow-hidden image-reveal">

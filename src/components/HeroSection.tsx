@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useFrameSequence } from "@/hooks/useFrameSequence";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 export function HeroSection() {
   const { canvasRef, containerRef, isLoaded, loadProgress } = useFrameSequence();
@@ -135,14 +136,14 @@ export function HeroSection() {
               className="flex flex-wrap gap-5 mt-10"
             >
               <MagneticButton>
-                <a href="#curated" className="btn-primary">
+                <Link href="/cars" className="btn-primary">
                   <span>Explore Collection</span>
-                </a>
+                </Link>
               </MagneticButton>
               <MagneticButton>
-                <a href="#contact" className="btn-secondary">
+                <Link href="/#contact" className="btn-secondary">
                   Talk to an Expert
-                </a>
+                </Link>
               </MagneticButton>
             </motion.div>
           </div>

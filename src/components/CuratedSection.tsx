@@ -6,6 +6,7 @@ import Link from "next/link";
 import { FadeIn } from "@/components/motion/FadeIn";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { ArrowRight, Fuel, Gauge, Settings } from "lucide-react";
+import { CarCard } from "@/components/cars/CarCard";
 
 export function CuratedSection() {
   const [cars, setCars] = useState<any[]>([]);
@@ -84,10 +85,10 @@ export function CuratedSection() {
                 </p>
               </div>
               <MagneticButton className="mt-6 lg:mt-0">
-                <a href="#contact" className="btn-secondary flex items-center gap-2">
+                <Link href="/cars" className="btn-secondary flex items-center gap-2">
                   View All Cars
                   <ArrowRight size={16} />
-                </a>
+                </Link>
               </MagneticButton>
             </div>
           </FadeIn>
@@ -193,119 +194,7 @@ export function CuratedSection() {
           {!loading && !error && cars.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {cars.map((car, i) => (
-                <FadeIn key={car._id} delay={i * 0.1}>
-                  <div
-                    className="group rounded-xl overflow-hidden transition-all duration-700 hover:transform hover:-translate-y-2 relative"
-                    style={{
-                      background: "var(--color-bg-card)",
-                      border: "1px solid var(--color-border-subtle)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(200,169,107,0.2)";
-                      e.currentTarget.style.boxShadow = "0 20px 60px rgba(0,0,0,0.4)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
-                    <Link href={`/cars/${car._id}`} className="absolute inset-0 z-10">
-                      <span className="sr-only">View {car.carName} details</span>
-                    </Link>
-
-                    {/* Image */}
-                    <div className="relative overflow-hidden" style={{ height: "220px" }}>
-                      <Image
-                        src={car.thumbnailImage || "/images/placeholder-car.webp"}
-                        alt={`${car.carName} - Premium Pre-Owned`}
-                        fill
-                        className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                      <div
-                        className="absolute inset-0"
-                        style={{
-                          background: "linear-gradient(180deg, transparent 50%, rgba(10,10,10,0.5) 100%)",
-                        }}
-                      />
-                      {/* Badge */}
-                      {car.featured && (
-                        <div
-                          className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-[10px] font-semibold tracking-[0.1em] uppercase"
-                          style={{
-                            background: "rgba(200,169,107,0.9)",
-                            color: "var(--color-bg-primary)",
-                          }}
-                        >
-                          Featured
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 relative z-20 pointer-events-none">
-                      <h4
-                        className="text-lg font-semibold mb-3 truncate"
-                        style={{
-                          fontFamily: "var(--font-display)",
-                          color: "var(--color-text-primary)",
-                        }}
-                        title={car.carName}
-                      >
-                        {car.carName}
-                      </h4>
-
-                      {/* Specs */}
-                      <div className="flex gap-4 mb-4">
-                        <div className="flex items-center gap-1.5">
-                          <Fuel size={13} style={{ color: "var(--color-text-muted)" }} />
-                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                            {car.fuelType}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Settings size={13} style={{ color: "var(--color-text-muted)" }} />
-                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                            {car.transmission}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <Gauge size={13} style={{ color: "var(--color-text-muted)" }} />
-                          <span className="text-xs" style={{ color: "var(--color-text-secondary)" }}>
-                            {car.kilometersDriven?.toLocaleString("en-IN") || 0} km
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Price + CTA */}
-                      <div className="flex items-center justify-between pt-4" style={{ borderTop: "1px solid var(--color-border-subtle)" }}>
-                        <div>
-                          <span className="text-xs" style={{ color: "var(--color-text-muted)" }}>
-                            Starting at
-                          </span>
-                          <p
-                            className="text-xl font-bold"
-                            style={{
-                              fontFamily: "var(--font-display)",
-                              color: "var(--color-accent-gold)",
-                            }}
-                          >
-                            {formatPrice(car.price)}
-                          </p>
-                        </div>
-                        <div
-                          className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110"
-                          style={{
-                            background: "var(--color-accent-gold-dim)",
-                            border: "1px solid var(--color-border-gold)",
-                          }}
-                        >
-                          <ArrowRight size={16} style={{ color: "var(--color-accent-gold)" }} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </FadeIn>
+                <CarCard key={car._id} car={car} index={i} />
               ))}
             </div>
           )}
